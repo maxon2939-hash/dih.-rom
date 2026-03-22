@@ -1,0 +1,27 @@
+name: DerpFest Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y git wget curl unzip openjdk-11-jdk
+
+    - name: Install repo tool
+      run: |
+        mkdir -p ~/bin
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+        chmod +x ~/bin/repo
+        echo "$HOME/bin" >> $GITHUB_PATH
+
+    - name: Init source
+      run: |
+        mkdir derp
+        cd derp
+        repo init -u https://github.com/DerpFest-AOSP/android_manifest.git -b 16
